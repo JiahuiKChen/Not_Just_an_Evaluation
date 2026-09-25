@@ -218,5 +218,4 @@ and reuse terms.
 
 ## Citation
 
-Please cite the accompanying paper when using this code or data. Complete
-venue and author metadata can be added here after the anonymous review period.
+TODO: Add bibtex when arxiv/conference link is ready
