@@ -21,16 +21,26 @@ WORDS = ("not", "just", "only")
 SOURCES = ("P", "P_prime")
 
 
+EPILOG = (
+    "Requires finished Experiment 2 candidates for all eight models, each "
+    "covering all 180 items. See 'Running the analysis scripts' in the README."
+)
+
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, epilog=EPILOG)
     parser.add_argument("--results-root", default="results/experiment2")
     parser.add_argument("--data-stem", default="dailydialog_sense_subset")
     parser.add_argument("--output-dir", default="results/experiment2/analysis")
     parser.add_argument(
         "--expected-samples-per-condition",
         type=int,
-        default=50,
-        help="Use 0 to disable the candidate-count check.",
+        default=None,
+        help=(
+            "Candidates required per item and prompt condition. Defaults to the "
+            "samples_requested value recorded in each candidate file. Use 0 to "
+            "disable the candidate-count check."
+        ),
     )
     return parser.parse_args()
 
@@ -46,6 +56,19 @@ def candidate_path(results_root: Path, slug: str, data_stem: str) -> Path:
         found = ", ".join(str(path) for path in matches) or "<none>"
         raise FileNotFoundError(f"Expected one candidate file for {slug}; found {found}")
     return matches[0]
+
+
+def requested_samples(frame: pd.DataFrame, path: Path) -> int:
+    """Return the per-condition sample count recorded at generation time."""
+    if "samples_requested" not in frame.columns:
+        raise KeyError(
+            f"{path} has no samples_requested column; "
+            "pass --expected-samples-per-condition explicitly."
+        )
+    values = pd.to_numeric(frame["samples_requested"], errors="raise").unique()
+    if len(values) != 1:
+        raise ValueError(f"{path} mixes samples_requested values: {sorted(values)}.")
+    return int(values[0])
 
 
 def main() -> None:
@@ -68,9 +91,11 @@ def main() -> None:
             raise ValueError(f"Unexpected particle coverage in {path}.")
         if set(frame["generated_from"].dropna()) != set(SOURCES):
             raise ValueError(f"Unexpected source conditions in {path}.")
-        if args.expected_samples_per_condition:
+        expected = args.expected_samples_per_condition
+        if expected is None:
+            expected = requested_samples(frame, path)
+        if expected:
             counts = frame.groupby(["id", "generated_from"]).size()
-            expected = args.expected_samples_per_condition
             if not (counts == expected).all():
                 bad = counts.loc[counts != expected]
                 raise ValueError(

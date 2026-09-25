@@ -28,8 +28,14 @@ SCORE_FORMULAS = {
 }
 
 
+EPILOG = (
+    "Requires finished Experiment 1 scores for all eight models, each covering all 180 items. "
+    "See 'Running the analysis scripts' in the README."
+)
+
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, epilog=EPILOG)
     parser.add_argument("--results-root", default="results/experiment1")
     parser.add_argument("--human-data", default="data/human_annotations.csv")
     parser.add_argument("--stimuli", default="data/dailydialog_sense_subset.tsv")

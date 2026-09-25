@@ -22,8 +22,14 @@ TRANSFER_LABELS = (
 )
 
 
+EPILOG = (
+    "Requires every output from scripts/run_experiment3.py. "
+    "See 'Running the analysis scripts' in the README."
+)
+
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, epilog=EPILOG)
     parser.add_argument("--results-root", default="results/experiment3")
     parser.add_argument("--output-dir", default="results/experiment3/analysis")
     return parser.parse_args()

@@ -18,6 +18,7 @@ three experiments in the paper.
   - [Experiment 1: Particle removal](#experiment-1-particle-removal)
   - [Experiment 2: Paired-context generation](#experiment-2-paired-context-generation)
   - [Experiment 3: Component localization](#experiment-3-component-localization)
+  - [Running the analysis scripts](#running-the-analysis-scripts)
   - [Outputs and resuming](#outputs-and-resuming)
 - [Data licensing](#data-licensing)
 - [Citation](#citation)
@@ -201,6 +202,27 @@ The launcher reproduces the paper settings:
 The four transfer directions are exclusive `just` → `only`, non-exclusive
 `just` → `only`, `only` → exclusive `just`, and `only` → non-exclusive
 `just`.
+
+### Running the analysis scripts
+
+The analysis scripts summarize the full paper setup, so they will only run
+once every checkpoint has finished:
+
+- `analysis/experiment1.py` needs Experiment 1 scores from all eight models,
+  each covering all 180 items.
+- `analysis/experiment2.py` needs Experiment 2 candidates from all eight
+  models, each covering all 180 items. By default it expects the number of
+  responses per prompt condition recorded in each candidate file (50 for the
+  paper setup), so runs with a smaller `--samples-per-condition` are checked
+  automatically. Pass `--expected-samples-per-condition N` to require a
+  specific count, or `0` to turn the check off.
+- `analysis/experiment3.py` needs every output from `scripts/run_experiment3.py`.
+
+If a model is missing or incomplete, the script stops with an error naming
+the missing model or file. Runs of a single model (`--models ...`) are useful for
+debugging, but their per-model results are in the files under
+`results/experiment{1,2}/<model_slug>/` (the `.txt` summary and the
+`*_summary.tsv` files), not in the analysis outputs.
 
 ### Outputs and resuming
 
