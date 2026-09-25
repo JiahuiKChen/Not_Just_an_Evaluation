@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Local Python environments and packaging artifacts.
+.venv/
+venv/
+.env
+.env.*
+build/
+dist/
+*.egg-info/
+
+# Operating-system and editor files.
+.DS_Store
+._*
+.idea/
+.vscode/
+*~
+
+# Model caches, downloaded weights, and experiment outputs are not versioned.
+.cache/
+checkpoints/
+wandb/
+*.pt
+*.pth
+*.safetensors
+results/
+logs/
+slurm-*.out

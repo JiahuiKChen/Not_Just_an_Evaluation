@@ -1,0 +1,12 @@
+# Analysis and experiment orchestration
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
+tqdm>=4.66
+
+# Model inference. Qwen3.5 support requires a recent Transformers release.
+torch>=2.1
+transformers>=5.2
+accelerate>=1.0
+safetensors>=0.4
+sentencepiece>=0.2
