@@ -1,7 +1,9 @@
 # Not Just an Evaluation
 
-This repository accompanies the paper *Not Just an Evaluation: A Case Study
-of Discourse Particle Sensitivity in Language Models*. It contains the
+[![arXiv](https://img.shields.io/badge/arXiv-2610.13794-b31b1b.svg)](https://arxiv.org/abs/2610.13794)
+
+This repository accompanies the paper [*Not Just an Evaluation: A Case Study
+of Discourse Particle Sensitivity in Language Models*](https://arxiv.org/abs/2610.13794). It contains the
 released dialogue stimuli, human preference annotations, and code for all
 three experiments in the paper.
 
@@ -240,4 +242,16 @@ and reuse terms.
 
 ## Citation
 
-TODO: Add bibtex when arxiv/conference link is ready
+If you use this code or data, please cite our paper:
+
+```bibtex
+@misc{sheffield2026notjustevaluation,
+  title = {Not Just an Evaluation: A Case Study of Discourse Particle Sensitivity in Language Models},
+  author = {William Sheffield and Jiahui Chen and Amy Zhang and Alex Warstadt and Junyi Jessy Li and Kanishka Misra},
+  year = {2026},
+  eprint = {2610.13794},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  url = {https://arxiv.org/abs/2610.13794}
+}
+```
